@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import MovieSchedule from './pages/MovieSchedule';
 import PurchaseTicket from './pages/PurchaseTicket';
+import Cartelera from './pages/cartelera';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/schedule" element={<MovieSchedule />} />
         <Route path="/purchase/:movieId/:day" element={<PurchaseTicket />} />
+        <Route path="/cartelera" element={<Cartelera/>}/>
       </Routes>
     </Router>
   );
