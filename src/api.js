@@ -19,9 +19,18 @@ export const getMovies = async () => {
 // Función para obtener funciones de películas (requiere autenticación)
 export const getMovieFunctions = async () => {
   try {
-    const response = await api.get('/movie-functions',);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación.');
+    }
+
+    const response = await api.get('/movie-functions', {
+      headers: {
+        Authorization: `Bearer ${token}`, // Añadir el token a las cabeceras
+      },
+    });
     return response.data;
-    } catch (error) {
+  } catch (error) {
     console.error('Error fetching movie functions:', error);
     throw error; // Manejar errores en el componente que llama a esta función
   }

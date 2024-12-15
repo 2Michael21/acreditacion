@@ -4,8 +4,10 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MovieSchedule from './pages/MovieSchedule';
-import PurchaseTicket from './pages/PurchaseTicket';
+import Asientos from './pages/asientos';
+//import PurchaseSuccess from './PurchaseSuccess'; // Página de éxito de compra
 import Cartelera from './pages/cartelera';
+import Tickets from './pages/tickets';
 
 const App: React.FC = () => {
   return (
@@ -15,8 +17,9 @@ const App: React.FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/schedule" element={<MovieSchedule />} />
-        <Route path="/purchase/:movieId/:day" element={<PurchaseTicket />} />
         <Route path="/cartelera" element={<Cartelera/>}/>
+        <Route path="/seat-selection/:functionId" element={<Asientos />} />
+        <Route path='/tickets' element={<Tickets/>}/>
       </Routes>
     </Router>
   );

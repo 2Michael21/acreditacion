@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import getMovies from '../api'; // Llama a la función del archivo api.js para obtener las películas
-import axios from 'axios'; // Asegúrate de tener axios instalado
 
 export const API_BASE_URL = 'https://proyectoweb2-production.up.railway.app/api'; // Asegúrate de que la URL esté correcta
 
@@ -79,7 +78,7 @@ const MovieSchedule: React.FC = () => {
               value={searchTerm}
               onChange={handleSearch}
               placeholder="Buscar película..."
-              className="w-full p-2 rounded-lg text-black"
+              className="w-full p-2 rounded-lg text-black pr-24"  // Añadido padding a la derecha para evitar que se solape el botón
             />
             <button
               onClick={handleSearchSubmit}

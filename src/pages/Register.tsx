@@ -26,9 +26,14 @@ const Register: React.FC = () => {
     setSuccess(null);
 
     try {
-      const  { data } = await api.post('/register', formData); // Enviar los datos al backend
+      const { data } = await api.post('/register', formData); // Enviar los datos al backend
       setSuccess('Registro exitoso. Ahora puedes iniciar sesión.');
       setFormData({ name: '', email: '', password: '', password_confirmation: '' }); // Limpia el formulario
+
+      // Guardar el nombre y el token en localStorage después del registro exitoso
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('name', data.name); // Guardar el nombre de usuario
+
     } catch (err: any) {
       if (err.response && err.response.data) {
         setError(err.response.data.message || 'Hubo un error durante el registro.');

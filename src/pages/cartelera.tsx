@@ -94,7 +94,7 @@ const Cartelera: React.FC = () => {
   };
 
   const handleDayClick = (functionId: number) => {
-    navigate(`/purchase/${functionId}`);
+    navigate(`/seat-selection/${functionId}`);
   };
 
   const handleLogout = async () => {
@@ -126,8 +126,8 @@ const Cartelera: React.FC = () => {
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">Cine Uleam</h1>
           <div className="flex gap-6">
-            <button onClick={() => navigate('/functions')} className="hover:text-gray-400">
-              Funciones
+            <button onClick={() => navigate('/tickets')} className="hover:text-gray-400">
+              Mis Tickets
             </button>
             <button onClick={handleLogout} className="hover:text-gray-400">
               Cerrar Sesión
