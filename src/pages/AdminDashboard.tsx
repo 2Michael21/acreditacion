@@ -28,7 +28,7 @@ const AdminDashboard: React.FC = () => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     if (!token) {
       alert('No estás autenticado. Redirigiendo a la página de inicio.');
       navigate('/login');
@@ -38,7 +38,7 @@ const AdminDashboard: React.FC = () => {
   }, [navigate]);
 
   const fetchData = async () => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     if (!token) {
       setError('No se encontró token de autenticación');
       setLoading(false);
@@ -71,7 +71,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleAddUser = async () => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     if (!newUser.name || !newUser.email || !newUser.password || !newUser.password_confirmation) {
       alert('Por favor, completa todos los campos del formulario.');
       return;
@@ -105,7 +105,7 @@ const AdminDashboard: React.FC = () => {
     }
   };
   const handleDeleteRoom = async (roomId: number) => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(`https://proyectoweb2-production.up.railway.app/api/rooms/${roomId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -123,7 +123,7 @@ const AdminDashboard: React.FC = () => {
       return;
     }
 
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     try {
       await axios.post(
         'https://proyectoweb2-production.up.railway.app/api/rooms',
@@ -139,7 +139,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteClient = async (clientId: number) => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(`https://proyectoweb2-production.up.railway.app/api/user/${clientId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -152,7 +152,7 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteAdmin = async (adminId: number) => {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(`https://proyectoweb2-production.up.railway.app/api/accounts/${adminId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -386,7 +386,7 @@ const AdminDashboard: React.FC = () => {
         </button>
         <button
           onClick={() => {
-            localStorage.removeItem('auth_token');
+            localStorage.removeItem('token');
             navigate('/login');
           }}
           className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded mt-6"

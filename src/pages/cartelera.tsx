@@ -34,7 +34,7 @@ const Cartelera: React.FC = () => {
 
   useEffect(() => {
     const fetchFunctions = async () => {
-      const token = localStorage.getItem('auth_token');  // Cambié aquí a 'auth_token'
+      const token = localStorage.getItem('token');  // Cambié aquí a 'auth_token'
       if (!token) {
         console.error('No hay token de autenticación. Redirigiendo al login...');
         navigate('/login');  // Redirige al login si no hay token
@@ -55,7 +55,7 @@ const Cartelera: React.FC = () => {
       } catch (err: any) {
         if (err.response?.status === 401 || err.response?.status === 403) {
           console.error('Token inválido o sin permisos. Redirigiendo al login...');
-          localStorage.removeItem('auth_token');  // Elimina el token inválido
+          localStorage.removeItem('token');  // Elimina el token inválido
           navigate('/login');  // Redirige al login
         } else {
           console.error('Error al cargar las funciones:', err);

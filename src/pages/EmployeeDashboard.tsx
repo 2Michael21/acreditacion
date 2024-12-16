@@ -16,7 +16,7 @@ const EmployeeDashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Obtener el token y el nombre del comprador desde localStorage
-  const token = localStorage.getItem('auth_token');
+  const token = localStorage.getItem('token');
   const buyerName = localStorage.getItem('user_name'); // Nombre del comprador
 
   const handleSearch = async () => {
@@ -38,6 +38,7 @@ const EmployeeDashboard: React.FC = () => {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     navigate('/');  // Redirigir al inicio
   };
 

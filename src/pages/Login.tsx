@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       const response = await api.post('/login', formData);
       const { token, role } = response.data;
 
-      localStorage.setItem('auth_token', token);
+      localStorage.setItem('token', token);
       localStorage.setItem('role', role);
 
       if (role === 'admin') {
