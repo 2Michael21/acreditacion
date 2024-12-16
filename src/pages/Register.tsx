@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import api from '../api';
 
@@ -12,7 +13,8 @@ const Register: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
+  const navigate = useNavigate();
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -96,9 +98,9 @@ const Register: React.FC = () => {
         </form>
         <p className="text-gray-400 mt-4">
           ¿Ya tienes una cuenta?{' '}
-          <a href="/login" className="text-blue-500 hover:underline">
-            Inicia sesión
-          </a>
+          <button onClick={() => navigate('/login')} className="text-blue-500 hover:underline">
+            Regístrate aquí
+          </button>
         </p>
       </div>
     </div>
