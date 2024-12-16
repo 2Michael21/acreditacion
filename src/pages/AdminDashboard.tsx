@@ -17,7 +17,6 @@ const AdminDashboard: React.FC = () => {
   const [admins, setAdmins] = useState<User[]>([]);
   const [rooms, setRooms] = useState<any[]>([]);
   const [newRoomName, setNewRoomName] = useState<string>('');
-  const [selectedRoom, setSelectedRoom] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [newUser, setNewUser] = useState({
@@ -280,7 +279,7 @@ const AdminDashboard: React.FC = () => {
                     <td className="border px-4 py-2">{room.name}</td>
                     <td className="border px-4 py-2">
                       <button
-                        onClick={() => setSelectedRoom(room)}
+                        onClick={(room)}
                         className="text-blue-500"
                       >
                         Editar
