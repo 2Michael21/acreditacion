@@ -75,7 +75,6 @@ const Asientos = () => {
       return;
     }
 
-    // Verificar que functionId esté presente y convertirlo a entero
     const functionIdNumber = functionId ? parseInt(functionId, 10) : null;
     if (functionIdNumber === null) {
       setError('ID de función no válido');
@@ -83,11 +82,11 @@ const Asientos = () => {
     }
 
     const requestData = {
-      movie_function_id: functionIdNumber, // Asegúrate de que esta sea la función correcta
-      seat_numbers: selectedSeats, // Los asientos seleccionados
+      movie_function_id: functionIdNumber,
+      seat_numbers: selectedSeats,
     };
 
-    console.log('Datos enviados:', requestData); // Verifica los datos enviados
+    console.log('Datos enviados:', requestData);
 
     try {
       setLoading(true);
@@ -102,7 +101,18 @@ const Asientos = () => {
       );
 
       console.log('Compra exitosa:', response.data);
-      navigate('/cartelera'); // Redirige a la página de cartelera
+
+      // Guardar los tickets en el localStorage
+      const existingTickets = JSON.parse(localStorage.getItem('tickets') || '[]');
+      const newTicket = {
+        ticket_code: response.data.ticket_code,
+        movie_title: response.data.movie_title,
+        room_name: response.data.room_name,
+        seat_numbers: response.data.seat_numbers,
+      };
+      localStorage.setItem('tickets', JSON.stringify([...existingTickets, newTicket]));
+
+      navigate('/cartelera');
     } catch (error: any) {
       console.error('Error al finalizar la compra:', error?.response?.data);
       setError('Error al procesar la compra. Por favor, intenta nuevamente.');
@@ -113,7 +123,6 @@ const Asientos = () => {
 
   return (
     <div>
-      {/* Barra de navegación */}
       <nav className="bg-gray-900 text-white p-4">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center">
           <button onClick={() => navigate('/cartelera')} className="hover:text-gray-400">
@@ -123,7 +132,6 @@ const Asientos = () => {
         </div>
       </nav>
 
-      {/* Contenido principal */}
       <div className="bg-gray-900 min-h-screen p-8">
         <h2 className="text-white text-3xl mb-6">Detalles de la Función</h2>
         <p className="text-white mb-4">{functionData.movie.title}</p>
@@ -137,7 +145,7 @@ const Asientos = () => {
                 className={`seat p-4 m-2 rounded-lg text-white cursor-pointer 
                   ${isOccupied ? 'bg-gray-700 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'}
                   ${selectedSeats.includes(seatNumber) ? 'bg-blue-500' : ''} 
-                  ${isOccupied ? 'cursor-not-allowed' : ''}`} // Cambiar el cursor en los asientos ocupados
+                  ${isOccupied ? 'cursor-not-allowed' : ''}`}
                 onClick={() => handleSeatClick(seatNumber, Boolean(isOccupied))}
               >
                 {seatNumber}

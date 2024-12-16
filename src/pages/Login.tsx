@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import api from '../api';
-import { useNavigate } from 'react-router-dom'; // Agregado para la redirección
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +11,7 @@ const Login: React.FC = () => {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const navigate = useNavigate();  // Usando useNavigate para la redirección
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -26,11 +26,21 @@ const Login: React.FC = () => {
     setSuccess(null);
 
     try {
-      const response = await api.post('/login', formData); // Solicitud al endpoint de login
-      const { token } = response.data;
-      localStorage.setItem('token', token); // Guarda el token en localStorage
+      const response = await api.post('/login', formData);
+      const { token, role } = response.data;
+
+      localStorage.setItem('auth_token', token);
+      localStorage.setItem('role', role);
+
+      if (role === 'admin') {
+        navigate('/admin');
+      } else if (role === 'empleado') {
+        navigate('/employee');
+      } else if(role === 'user'){
+        navigate('/cartelera');
+      }
+
       setSuccess('Inicio de sesión exitoso.');
-      navigate('/cartelera'); // Usando navigate para redirigir a la cartelera
     } catch (err: any) {
       if (err.response && err.response.data) {
         setError(err.response.data.message || 'Error en las credenciales.');
@@ -43,8 +53,8 @@ const Login: React.FC = () => {
   return (
     <div className="bg-gray-900 min-h-screen flex flex-col items-center justify-center">
       <Navbar />
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg mt-10">
-        <h2 className="text-2xl text-white mb-4">Iniciar Sesión</h2>
+      <div className="bg-gray-800 p-8 rounded-xl shadow-xl mt-10 w-full sm:w-96">
+        <h2 className="text-3xl text-white mb-6 text-center">Iniciar Sesión</h2>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         {success && <div className="text-green-500 mb-4">{success}</div>}
         <form className="flex flex-col" onSubmit={handleSubmit}>
@@ -52,7 +62,7 @@ const Login: React.FC = () => {
           <input
             type="email"
             name="email"
-            className="p-2 mb-4 rounded bg-gray-700 text-white"
+            className="p-3 mb-4 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Ingrese su correo electrónico"
             value={formData.email}
             onChange={handleChange}
@@ -61,19 +71,19 @@ const Login: React.FC = () => {
           <input
             type="password"
             name="password"
-            className="p-2 mb-4 rounded bg-gray-700 text-white"
+            className="p-3 mb-6 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Ingrese su contraseña"
             value={formData.password}
             onChange={handleChange}
           />
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
           >
             Iniciar Sesión
           </button>
         </form>
-        <p className="text-gray-400 mt-4">
+        <p className="text-gray-400 mt-4 text-center">
           ¿No tienes una cuenta?{' '}
           <a href="/register" className="text-blue-500 hover:underline">
             Regístrate aquí
